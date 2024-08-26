@@ -4,15 +4,17 @@ import requests
 import sys
 
 import util.map
+import util.config_parser
 from api import regfox
 from participants.artist_guest import Artist_Guest
 from participants.student import Student
+from participants.chaperone import Chaperone
 
 
 class FormIds:
-	ARTIST_GUEST = 758563
-	STUDENT = 759287
-
+	ARTIST_GUEST = util.config_parser.read_config()['artist_guest_form']
+	STUDENT = util.config_parser.read_config()['student_form']
+	CHAPERONE = util.config_parser.read_config()['chaperone_form']
 
 def main():
 	if len(sys.argv) != 2:
@@ -35,9 +37,9 @@ def main():
 			case FormIds.STUDENT:
 				student = Student(role_dict)
 				print(student.to_row(), '\n')
-
-		# faculty photos url
-		# https://s3.amazonaws.com/uploads.form.webconnex.com/store/01H9R2FP45QGTD4FFRG/sammy-photo-2023-qrvjf.jpg
+			case FormIds.CHAPERONE:
+				chaperone = Chaperone(role_dict)
+				print(student.to_row(), '\n')
 
 if __name__ == '__main__':
 	main()

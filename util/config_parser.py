@@ -28,7 +28,7 @@ def read_config():
         'scholarships_sheet': scholarships_sheet,
         'artist_guest_form': artist_guest_form,
         'student_form': student_form,
-        'chaperone_form': chaperone_form
+        'chaperone_form': chaperone_form,
         'acadia_trad_list_id': acadia_trad_list_id
     }
  
