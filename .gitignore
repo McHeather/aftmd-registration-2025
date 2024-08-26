@@ -163,6 +163,7 @@ cython_debug/
 
 # Explicitly add __pycaches__
 util/__pycache__/
+util/__pycache__
 
 # Secrets
 config.ini
