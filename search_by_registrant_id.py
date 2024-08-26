@@ -39,7 +39,7 @@ def main():
 				print(student.to_row(), '\n')
 			case FormIds.CHAPERONE:
 				chaperone = Chaperone(role_dict)
-				print(student.to_row(), '\n')
+				print(chaperone.to_row(), '\n')
 
 if __name__ == '__main__':
 	main()
