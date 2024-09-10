@@ -1,7 +1,7 @@
 from datetime import datetime
 from util.map import set_field_if_exists
 
-class Artist_Guest:
+class Sound_Engineer_Guest:
 	def __init__(self, staff_dict):
 		self.fname = staff_dict['First Name']
 		self.lname = staff_dict['Last Name']

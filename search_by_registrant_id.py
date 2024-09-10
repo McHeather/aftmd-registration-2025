@@ -22,7 +22,7 @@ def main():
 		exit()
 	else:
 		id = sys.argv[1]
-		response = json.loads(regfox.registrants_by_id(id))	
+		response = json.loads(regfox.get_registrants_by_id(id))	
 		data = response['data']
 		form_id = data['formId']
 		print('\n', data, '\n')

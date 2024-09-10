@@ -3,7 +3,7 @@
 import requests
 import util.config_parser
 
-def registrants_by_form(form_id, date_after, date_before, status):
+def get_registrants_by_form(form_id, date_after, date_before, status):
 	REGFOX_API_KEY = util.config_parser.read_config()['regfox_api_key']
 
 	try:
@@ -29,7 +29,7 @@ def registrants_by_form(form_id, date_after, date_before, status):
 		print('HTTP Request failed')
 
 
-def registrants_by_id(id):
+def get_registrants_by_id(id):
 	REGFOX_API_KEY = util.config_parser.read_config()['regfox_api_key']
 
 	try:

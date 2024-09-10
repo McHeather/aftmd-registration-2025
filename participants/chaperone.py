@@ -27,6 +27,7 @@ class Chaperone:
 		if self.volunteer == "":
 			self.volunteer = set_field_if_exists('5. If I receive a scholarship, I am willing to volunteer while attending the festival.', student_dict)
 		self.photo_optout = set_field_if_exists('Please give me a red sticker on my name badge', student_dict)
+		self.parking = set_field_if_exists('Will you need a parking pass?', student_dict)
 
 		self.scholarship = set_field_if_exists('Would you like to apply for a scholarship?', student_dict)
 		if self.scholarship == "Yes":
@@ -76,8 +77,8 @@ class Chaperone:
 		# Lodging / Roommate / Room Waitlist / Housing Needs / NA / NA
 		self.housing, None, self.room_waitlist, self.housing_needs, None, None,
 		
-		# Meals / Dietary Reqs / Other Reqs / Lobster / Meals Waitlist / City / State / Photo optout / Income
-		self.meals, self.meal_reqs, self.meal_other_reqs, self.lobster, self.meals_waitlist, self.city, self.state, self.photo_optout, self.income,
+		# Meals / Dietary Reqs / Other Reqs / Lobster / Meals Waitlist / City / State / Photo optout / Parking Pass / Income
+		self.meals, self.meal_reqs, self.meal_other_reqs, self.lobster, self.meals_waitlist, self.city, self.state, self.photo_optout, self.parking, self.income,
 		
 		# Created / Entered / ID
 		self.created, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), self.regfox_id

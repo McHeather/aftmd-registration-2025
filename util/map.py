@@ -55,3 +55,26 @@ def set_blank_na(field_data):
 		return "NA"
 	else:
 		return field_data
+
+def set_discipline(option):
+	match option:
+		case 'Option1':
+			return 'Fiddle'
+		case 'Option2': 
+			return 'Guitar'
+		case 'Option3':
+			return 'Dance'
+		case 'Option4': 
+			return 'Piano'
+		case 'Option5':
+			return 'Flute'
+		case 'Option6': 
+			return 'Community Song'
+		case 'Option7':
+			return 'Bodhran'
+		case 'Option8': 
+			return 'Bouzouki'
+		case 'Option9':
+			return 'Mandolin'
+		case 'Option10': 
+			return 'Harp'
