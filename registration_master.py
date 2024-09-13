@@ -9,7 +9,7 @@ import sys
 # import waitlist
 import api.google_drive.auth
 import api.google_drive.upload
-from api.mailchimp import tag_chaperone
+from api.mailchimp import tag_email
 from api.regfox import get_registrants_by_form
 import util.map
 import util.file_io
@@ -41,24 +41,32 @@ def map_form_responses(form_id, participant_class, date_after='2024-08-01 12:00'
 	return new_participants
 
 
-def is_artist(new_participant):
-	return new_participant.role in ('Director', 'Faculty', 'Artist in Residence', 'Artistic Work Study Student')
+def is_taking_classes(participant):
+	return participant.discipline != ""
 
 
-def is_scholarship(new_participant):
-	return (new_participant.role in ('Student', 'Chaperone')) and (new_participant.scholarship == 'Yes')
+def is_artist(participant):
+	return participant.role in ('Director', 'Faculty', 'Artist in Residence', 'Artistic Work Study Student')
 
 
-def needs_chaperone(new_participant):
-	if (new_participant.role == 'Student') and (new_participant.age in ('12 - 14', '15 - 17')):
-		print("Adding chaperone (", new_participant.chaperone_email, ") to Mailchimp")
+def is_artist_or_crew(participant):
+	return participant.role in ('Director', 'Faculty', 'Artist in Residence', 'Artistic Work Study Student', 'Crew', 'Sound Engineer', 'Board')
+
+
+def is_scholarship(participant):
+	return (participant.role in ('Student', 'Chaperone')) and (participant.scholarship == 'Yes')
+
+
+def needs_chaperone(participant):
+	if (participant.role == 'Student') and (participant.age in ('12 - 14', '15 - 17')):
+		print("Adding chaperone (", participant.chaperone_email, ") to Mailchimp")
 		return True
 	else:
 		return False
 
 
-def is_waitlisted(new_participant):
-	return (new_participant.room_waitlist != "" or new_participant.meals_waitlist != "")
+def is_waitlisted(participant):
+	return (participant.room_waitlist != "" or participant.meals_waitlist != "")
 
 
 def main():
@@ -85,14 +93,21 @@ def main():
 		api.google_drive.upload.append_registrant(creds, config_data['reg_master_sheet'], "A1:BA1", "USER_ENTERED", new_participant.to_row())
 		
 		## Check if extra uploads are needed ##
+
+		if is_taking_classes(new_participant):
+			api.mailchimp.tag_email(new_participant.email, "2025-students")
+
 		if is_artist(new_participant):
 			api.google_drive.upload.append_registrant(creds, config_data['bios_sheet'], "A1:BA1", "USER_ENTERED", new_participant.bio_to_row())
-				
+		
+		if is_artist_or_crew(new_participant):
+			api.mailchimp.tag_email(new_participant.email, "2025-artists-crew")
+
 		if is_scholarship(new_participant):
 			api.google_drive.upload.append_registrant(creds, config_data['scholarships_sheet'], "A1:BA1", "USER_ENTERED", new_participant.applicant_to_row())
 		
 		if needs_chaperone(new_participant):
-			api.mailchimp.tag_chaperone(new_participant.chaperone_email)
+			api.mailchimp.tag_chaperone(new_participant.chaperone_email, "2025-chaperones")
 
 		# if is_waitlisted(new_participant):
 		# waitlist.upload_to_room_meals_waitlist(new_participant)
