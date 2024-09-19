@@ -107,7 +107,7 @@ def main():
 			api.google_drive.upload.append_registrant(creds, config_data['scholarships_sheet'], "A1:BA1", "USER_ENTERED", new_participant.applicant_to_row())
 		
 		if needs_chaperone(new_participant):
-			api.mailchimp.tag_chaperone(new_participant.chaperone_email, "2025-chaperones")
+			api.mailchimp.tag_email(new_participant.chaperone_email, "2025-chaperones")
 
 		# if is_waitlisted(new_participant):
 		# waitlist.upload_to_room_meals_waitlist(new_participant)

@@ -69,7 +69,7 @@ class Chaperone:
 		None, self.fname, self.lname, self.email, self.phone, self.badge_name, self.pronouns, self.role,
 		
 		# Accompanying / Age / Maine? / NA / NA / NA / NA / Festival Pass / Volunteer
-		self.u18_name, self.age, self.mainer, None, None, None, None, self.festival_pass, self.volunteer,
+		self.u18_name, None, self.mainer, None, None, None, None, self.festival_pass, self.volunteer,
 		
 		# Scholarship / Discipline / Group 
 		self.scholarship, self.discipline, self.group, 
@@ -93,5 +93,5 @@ class Chaperone:
 		None, None, None, None, None, None,
 
 		# Age / Mainer / Housing / Meals / Lobster / Paid / Created / ID
-		self.age, self.mainer, self.housing, self.meals, self.lobster, None, self.created, self.regfox_id
+		None, self.mainer, self.housing, self.meals, self.lobster, None, self.created, self.regfox_id
 		] ]
