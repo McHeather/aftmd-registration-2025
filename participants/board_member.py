@@ -35,6 +35,15 @@ class Board_Member:
 			self.roommate = set_field_if_exists('We match roommates based on age and gender. To help us do this, please enter your gender here (or let us know if you would prefer otherwise):', student_dict)
 		self.housing_needs = set_field_if_exists('Do you have any health-related concerns you would like us to be aware of?', student_dict)
 		
+		# format for sheets
+		match self.role:
+			case "yesIdLikeSingle":
+				self.housing = 'Private room'
+			case "yesIdLikeShared":
+				self.housing = 'Shared room'
+			case "No - I'll find my own accommodation":
+				self.housing = 'Own accommodation'
+
 		self.meals = set_field_if_exists('Meal plan', student_dict)
 		self.meal_reqs = set_field_if_exists('Dietary Requirements', student_dict)
 		self.meal_other_reqs = set_field_if_exists('Other dietary requirements', student_dict)

@@ -82,10 +82,7 @@ class Artist_Guest:
 		# self.photos.append(set_field_if_exists('Please upload a photo for our website/marketing:', staff_dict))
 
 		match self.role:
-			case 'Director':
-				self.meals = 'Full meal plan'
-				self.housing = 'Lodging provided'
-			case 'Faculty':
+			case 'Director'| 'Faculty' | 'Artistic Work Study Student' | 'Artist in Residence':
 				self.meals = 'Full meal plan'
 				self.housing = 'Lodging provided'
 

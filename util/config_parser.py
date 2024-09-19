@@ -20,7 +20,6 @@ def read_config():
     chaperone_form = config.get('RegFox Forms', 'CHAPERONE_FORM_ID')
     board_form = config.get('RegFox Forms', 'BOARD_FORM_ID')
 
-
     acadia_trad_list_id = config.get('Mailchimp', 'ACADIA_TRAD_LIST_ID')
  
     # Return a dictionary with the retrieved values
