@@ -1,10 +1,12 @@
 from datetime import datetime
+from util.map import set_discipline
 from util.map import set_field_if_exists
 
 class Board_Member:
 	def __init__(self, student_dict):
 		self.role = "Board"
 
+		# badge details
 		self.fname = set_field_if_exists('First Name', student_dict)
 		self.lname = set_field_if_exists('Last Name', student_dict)
 		self.email = set_field_if_exists('Email', student_dict)
@@ -16,6 +18,7 @@ class Board_Member:
 		self.mainer = set_field_if_exists('Are you a Maine resident?', student_dict)
 		self.maine_id = set_field_if_exists('Please upload proof of Maine residency:', student_dict)
 
+		# contact details
 		self.city = set_field_if_exists('City', student_dict)
 		self.state = set_field_if_exists('State', student_dict)
 		if self.state == "":
@@ -25,18 +28,22 @@ class Board_Member:
 		self.photo_optout = set_field_if_exists('Please give me a red sticker on my name badge', student_dict)
 		self.parking = set_field_if_exists('Will you need a parking pass?', student_dict)
 
-		# capitalize to ensure that self.group is set correctly
+		# tuition
+		# - capitalize to ensure that self.group is set correctly
 		self.discipline = set_field_if_exists('Major discipline:', student_dict).capitalize()
+		if self.discipline[:6] == "Option":
+			self.discipline = set_discipline(self.discipline)
 		self.group = set_field_if_exists(self.discipline+' group', student_dict)
+		self.group = self.group.split()[0]
 
+		# housing
 		self.housing = set_field_if_exists('Will you be staying on campus?', student_dict)
 		self.roommate = set_field_if_exists('Name of your requested roommate:', student_dict)
 		if self.roommate == "":
 			self.roommate = set_field_if_exists('We match roommates based on age and gender. To help us do this, please enter your gender here (or let us know if you would prefer otherwise):', student_dict)
 		self.housing_needs = set_field_if_exists('Do you have any health-related concerns you would like us to be aware of?', student_dict)
-		
-		# format for sheets
-		match self.role:
+		# - format for sheets
+		match self.housing:
 			case "yesIdLikeSingle":
 				self.housing = 'Private room'
 			case "yesIdLikeShared":
@@ -44,11 +51,19 @@ class Board_Member:
 			case "No - I'll find my own accommodation":
 				self.housing = 'Own accommodation'
 
+		# meals
 		self.meals = set_field_if_exists('Meal plan', student_dict)
+		# - format for sheets
+		match self.meals:
+			case "fullMealPlan":
+				self.housing = 'Full Meal Plan'
+			case "noMealPlan":
+				self.housing = 'No Meal Plan'
 		self.meal_reqs = set_field_if_exists('Dietary Requirements', student_dict)
 		self.meal_other_reqs = set_field_if_exists('Other dietary requirements', student_dict)
 		self.lobster = set_field_if_exists('Would you like to add on the Wednesday night lobster dinner?', student_dict)
 		
+		# bookkeeping
 		self.regfox_id = student_dict['id']
 		self.created = student_dict['created']
 		self.order_display_id = set_field_if_exists('order_display_id', student_dict)
@@ -72,7 +87,7 @@ class Board_Member:
 		None, self.discipline, self.group, 
 
 		# Lodging / Roommate / Room Waitlist / Housing Needs / NA / NA
-		self.housing, None, None, self.housing_needs, None, None,
+		self.housing, self.roommate, None, self.housing_needs, None, None,
 		
 		# Meals / Dietary Reqs / Other Reqs / Lobster / Meals Waitlist / City / State / Photo optout / Parking Pass / Income
 		self.meals, self.meal_reqs, self.meal_other_reqs, self.lobster, None, self.city, self.state, self.photo_optout, self.parking, self.income,
