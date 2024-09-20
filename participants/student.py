@@ -38,8 +38,7 @@ class Student:
 		self.scholarship = set_field_if_exists('Would you like to apply for a scholarship?', student_dict)
 		if self.scholarship == "Yes":
 			self.applicant = Scholarship(student_dict)
-
-		# capitalize to ensure that self.group is set correctly
+		# - capitalize to ensure that self.group is set correctly
 		self.discipline = set_field_if_exists('Major discipline:', student_dict).capitalize()
 		if self.discipline[:6] == "Option":
 			self.discipline = set_discipline(self.discipline)
@@ -48,8 +47,8 @@ class Student:
 
 		# housing
 		self.housing = set_field_if_exists('Will you be staying on campus?', student_dict)
-		# format for sheets
-		match self.role:
+		# - format for sheets
+		match self.housing:
 			case "Yes - I'd like a single room":
 				self.housing = 'Private room'
 			case "Yes - I'd like a shared room":

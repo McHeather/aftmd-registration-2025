@@ -3,17 +3,19 @@ from util.map import set_field_if_exists
 
 class Artist_Guest:
 	def __init__(self, staff_dict):
+		self.role = set_field_if_exists('My role at AFTMD 2025 is', staff_dict)
+
+		# badge details
 		self.fname = staff_dict['First Name']
 		self.lname = staff_dict['Last Name']
 		self.pronouns = set_field_if_exists('If you would like your pronouns included on your badge, please add them here (optional)', staff_dict)
-		self.role = set_field_if_exists('My role at AFTMD 2025 is', staff_dict)
-		# first responses have this mistake in them
+		# - first responses have this mistake in them
 		# self.role = set_field_if_exists('My role at AFTMD 2024 is', staff_dict)
 		self.badge_name = set_field_if_exists('First and Last Names you would like to appear on your badge (if different from above)', staff_dict)
 		self.guests = set_field_if_exists('Do you plan to have a partner/family member attend the festival with you?', staff_dict)
 		self.mainer = set_field_if_exists('Are you a Maine resident?', staff_dict)
 
-		# # guests details
+		# guests details
 		self.email = set_field_if_exists('Email address', staff_dict)
 		self.phone = set_field_if_exists('Phone Number', staff_dict)
 		self.who_accompanying = set_field_if_exists('Name of the faculty member you will be accompanying', staff_dict)
@@ -25,13 +27,15 @@ class Artist_Guest:
 		if self.age == "No":
 			self.age = "Over 18"
 		self.housing = set_field_if_exists('Will you be staying on campus at COA?', staff_dict)
-		self.discipline = set_field_if_exists('What morning classes will you be taking?', staff_dict)
-		if self.discipline is not None and self.discipline != "":
-			self.group = set_field_if_exists(self.discipline+' group', staff_dict)
-		else:
-			self.group = ""
 
-		# # faculty contact details
+		# tuition
+		self.discipline = set_field_if_exists('Major discipline:', staff_dict).capitalize()
+		if self.discipline[:6] == "Option":
+			self.discipline = set_discipline(self.discipline)
+		self.group = set_field_if_exists(self.discipline+' group', staff_dict)
+		self.group = self.group.split()[0]
+
+		# faculty contact details
 		if self.email == "":
 			self.email = set_field_if_exists('Preferred email for communications', staff_dict)
 		if self.phone == "":
@@ -43,12 +47,12 @@ class Artist_Guest:
 			self.state = set_field_if_exists('Province', staff_dict)
 		self.zip = set_field_if_exists('Zip/Postal Code', staff_dict)
 		
-		# # options
+		# options
 		self.all_camp_list = set_field_if_exists('I am happy for you to include my email in the "all camp" list that will be distributed to participants after the festival.', staff_dict)
 		self.residency = set_field_if_exists('Residency', staff_dict)
 		self.photo_optout = set_field_if_exists('Please give me a red sticker on my name tag', staff_dict)
 		
-		# # COA
+		# COA
 		self.meals = set_field_if_exists('Meal Plan', staff_dict)
 		self.meal_reqs = set_field_if_exists('Dietary Requirements', staff_dict)
 		self.meal_other_reqs = set_field_if_exists('Other dietary requirements', staff_dict)
@@ -59,7 +63,7 @@ class Artist_Guest:
 		if self.housing_needs == "":
 			self.housing_needs = set_field_if_exists('Do you have any housing needs we should be aware of?', staff_dict)
 
-		# # socials, bio
+		# socials, bio
 		self.bio = set_field_if_exists('Please add a brief bio (approx. 200 words) here:', staff_dict)
 		self.web_url = set_field_if_exists('Website URL:', staff_dict)
 		self.fb_profile_url = set_field_if_exists('Facebook profile URL', staff_dict)
@@ -86,7 +90,7 @@ class Artist_Guest:
 				self.meals = 'Full meal plan'
 				self.housing = 'Lodging provided'
 
-		# # fields outside of 'data' json
+		# fields outside of 'data' json
 		self.regfox_id = set_field_if_exists('id', staff_dict)
 		self.order_display_id = set_field_if_exists('order_display_id', staff_dict)
 		self.created = set_field_if_exists('created', staff_dict)
