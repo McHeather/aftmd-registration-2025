@@ -33,7 +33,8 @@ class Artist_Guest:
 		if self.discipline[:6] == "Option":
 			self.discipline = set_discipline(self.discipline)
 		self.group = set_field_if_exists(self.discipline+' group', staff_dict)
-		self.group = self.group.split()[0]
+		if self.group != "":
+			self.group = self.group.split()[0]
 
 		# faculty contact details
 		if self.email == "":

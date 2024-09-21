@@ -40,7 +40,8 @@ class Chaperone:
 		if self.discipline[:6] == "Option":
 			self.discipline = set_discipline(self.discipline)
 		self.group = set_field_if_exists(self.discipline+' group', student_dict)
-		self.group = self.group.split()[0]
+		if self.group != "":
+			self.group = self.group.split()[0]
 
 		# hosuing
 		self.housing = set_field_if_exists('Will you be staying on campus?', student_dict)

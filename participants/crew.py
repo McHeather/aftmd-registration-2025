@@ -31,7 +31,8 @@ class Crew:
 		if self.discipline[:6] == "Option":
 			self.discipline = set_discipline(self.discipline)
 		self.group = set_field_if_exists(self.discipline+' group', crew_dict)
-		self.group = self.group.split()[0]
+		if self.group != "":
+			self.group = self.group.split()[0]
 
 		# housing
 		self.housing = "Lodging provided"
